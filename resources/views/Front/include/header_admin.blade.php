@@ -204,10 +204,10 @@
                                 {{-- <i class="fas fa-tachometer-alt"></i>Main Categories ({{App\Models\MainCategory::where('active')->count()}})</a> --}}
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
                                 <li>
-                                    <a href="">View All</a>
+                                    <a href="{{Route('admin.maincategories')}}">View All</a>
                                 </li>
                                 <li>
-                                    <a href="">Add Categories</a>
+                                    <a href="{{Route('admin.maincategories.create')}}">Add Categories</a>
                                 </li>
                             </ul>
                         </li>

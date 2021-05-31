@@ -22,7 +22,16 @@ class MainCategory extends Model
         'translation_lang','translation_of','name','slug','photo','active','created_at','updated_at'
     ];
 
-    public function scopeActive($query){
+    public function getActive($query){
         return $query -> where('active',1);
     }
+
+    public function getActiveAttribute(){
+        return $this->active ? 'Active Item' : 'Not Active Item';
+    }
+
+    public function scopeSelection($query){
+        return $query->select('translation_lang','translation_of','name','slug','photo','active');
+    }
+
 }

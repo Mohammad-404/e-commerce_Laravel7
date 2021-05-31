@@ -45,7 +45,7 @@ class LanguagesController extends Controller
             if(!$languages){
                 return redirect()->route('Admin.languages.edit',$id)->with(['error' => 'Not Found Value']);
             }
-
+            // Language::find($id)->update();
             // $languages->update([]);
             $languages->update($request -> except('_token'));
             return redirect()->Route('admin.languages')->with(['success' => 'Updated Successfully !']);
