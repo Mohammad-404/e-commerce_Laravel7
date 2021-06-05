@@ -38,7 +38,6 @@ class Language extends Model
         return $this->active == 1 ? 'Item Is Active' : 'Item Is Not Active';
     }
 
-
     // public function getActiveAttribute($val){
     //     return $val == 1 ? 'Item Is Active' : 'Item Is Not Active';
     // }

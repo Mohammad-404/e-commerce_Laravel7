@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
+    
     public function getLogin(){
         return view('Admin.auth.login');
     }
@@ -22,6 +23,7 @@ class LoginController extends Controller
 
         if(auth()->guard('Admin')->attempt(['email' => $request->input('email') , 
                         'password' => $request->input('password')] ,$remember_me)){
+        
             // notify()->success('done enter'); //notification
 
             return redirect()->Route('admin.dashboard');

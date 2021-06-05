@@ -55,7 +55,6 @@ return [
             'visibility' => 'public',
         ],
 
-
         'maincategories' => [
             'driver' => 'local',
             'root' => base_path('public/images/maincategories'),
