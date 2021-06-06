@@ -25,7 +25,8 @@
                         <div class="form-group col-lg-5">
                             {{-- //comment {{__('messages.'.$item->abbr)}} //when translate any data  --}}
                         <label for="exampleInputEmail1">Name Category - {{$item->name}}</label>
-                        <input type="text" name="category[{{$index}}][name]" class="form-control"  placeholder="">
+                        <input type="text" name="category[{{$index}}][name]" 
+                        value="{{ old("category.$index.name") }}" class="form-control"  placeholder="">
                         @error("category.$index.name")
                             <label class="text-danger">The Feild Is Required</label>
                         @enderror

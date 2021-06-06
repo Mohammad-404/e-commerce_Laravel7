@@ -22,8 +22,18 @@ class MainCategoriesController extends Controller
     }
 
     public function store(MainCategoryRequest $request){
-        
-        return $request;
+        //Note convert array to collection
+        //$main_category = $request->category; now convert to collection use collect();
+        $main_category = collect($request->category);
+        //now use filter, filiter is return data i'am seleccted like i need give english data deafult
+        //$value in function like array {} , {} , {} -> {} this is value
+        //save the first value is English language
+        $filter = $main_category->filter(function($value,$key){
+            return $value['translation_lang'] == get_language_deafult();
+        });
+        return $filter;
+
+        // return $request;
     }   
     
 

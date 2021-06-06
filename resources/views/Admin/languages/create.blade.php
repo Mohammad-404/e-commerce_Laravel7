@@ -12,14 +12,14 @@
                 <div class="row">
                     <div class="form-group col-lg-6">
                     <label for="exampleInputEmail1">Name Language</label>
-                    <input type="text" name="name" class="form-control"  placeholder="Name Language">
+                    <input type="text" name="name" value="{{old("name")}}" class="form-control"  placeholder="Name Language">
                     @error('name')
                         <label class="text-danger">{{$message}}</label>
                     @enderror
                     </div>
                     <div class="form-group col-lg-6">
                     <label for="exampleInputPassword1">Abbr Language</label>
-                    <input type="text" name="abbr" class="form-control"  placeholder="Abbr Language">
+                    <input type="text" name="abbr" value="{{old("abbr")}}" class="form-control"  placeholder="Abbr Language">
                     @error('abbr')
                         <label class="text-danger">{{$message}}</label>
                     @enderror
