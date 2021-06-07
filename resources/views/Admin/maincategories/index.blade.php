@@ -34,9 +34,9 @@
                                 <tr>
                                     <td>{{$item->name}}</td>
                                     <td>{{$item->translation_lang}}</td>
-                                    <td>{{$item->getActiveAttribute()}}</td>
-                                    <td><a class="btn btn-primary" href="{{Route('admin.maincategories.edit',$item->id)}}" >Update</a></td>
-                                    <td><a class="btn btn-danger" href="{{Route('admin.maincategories.delete',$item->id)}}" >Delete</a></td>
+                                    <td>{{$item->getActive()}}</td>
+                                    <td><a class="btn btn-primary" href="" >Update</a></td>
+                                    <td><a class="btn btn-danger" href="" >Delete</a></td>
                                 </tr>
                             @endforeach
                         @endisset
