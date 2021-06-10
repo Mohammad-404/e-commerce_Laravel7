@@ -30,6 +30,10 @@ class MainCategory extends Model
         return $this->active == 1 ? 'Active Item' : 'Not Active Item';
     }
 
+    // public function getPhotoAttripute($val){
+    //     return $val !== null ? asset('public/'.$val) : "";
+    // }
+
     public function scopeSelection($query){
         return $query->select('translation_lang','translation_of','name','slug','photo','active');
     }

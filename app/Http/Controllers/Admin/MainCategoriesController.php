@@ -8,6 +8,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\support\Facades\Config;
 use App\Http\Requests\MainCategoryRequest;
+use Illuminate\Support\Facades\DB;
+
 
 class MainCategoriesController extends Controller
 {
@@ -33,45 +35,56 @@ class MainCategoriesController extends Controller
         // return $filter; // return like with key {"1":{"name":"MAN","translation_lang":"en","active":"1"}}
         //like create i want using insertGetId === create
         
-        /**
-        * @var array $deafult_category
-        */
+        try{
+            $main_category = collect($request->category);
+            $filter = $main_category->filter(function($value,$key){
+                return $value['translation_lang'] == get_language_deafult();
+            });
+            $deafult_category = array_values($filter->all())[0]; 
 
-        $main_category = collect($request->category);
-        $filter = $main_category->filter(function($value,$key){
-            return $value['translation_lang'] == get_language_deafult();
-        });
-        $deafult_category = array_values($filter->all())[0]; 
-
-        $filePath = "";
-        if($request -> has('photo')){ //hal find image from request??
-            $filePath = uploadImage('maincategories' , $request->photo);
-        }
-
-        $deafult_category_id = MainCategory::insertGetId([ //return ID row
-            'name'              => $deafult_category['name'],
-            'translation_lang'  => $deafult_category['translation_lang'],
-            'translation_of'    => 0,
-            'slug'              => $deafult_category['name'],
-            'photo'             => $filePath
-        ]);
-
-        $categories = $main_category->filter(function($value,$key){
-            return $value['translation_lang'] != get_language_deafult();
-        });
-
-        if(isset($categories) && $categories->count()){
-            $categories_arr = [];
-            foreach($categories as $category){
-                $categories_arr[] = [
-                    'name'              => $category['name'],
-                    'translation_lang'  => $category['translation_lang'],
-                    'translation_of'    => $deafult_category_id,
-                    'slug'              => $category['name'],
-                    'photo'             => $filePath
-                ];
+            $filePath = "";
+            if($request -> has('photo')){ //hal find image from request??
+                $filePath = uploadImage('maincategories' , $request->photo);
             }
-            MainCategory::insert($categories_arr);
+
+            DB::beginTransaction(); //begin save all rows ..getid..
+
+            $deafult_category_id = MainCategory::insertGetId([ //return ID row
+                'name'              => $deafult_category['name'],
+                'translation_lang'  => $deafult_category['translation_lang'],
+                'translation_of'    => 0,
+                'slug'              => $deafult_category['name'],
+                'photo'             => $filePath
+            ]);
+
+            $categories = $main_category->filter(function($value,$key){
+                return $value['translation_lang'] != get_language_deafult();
+            });
+
+            if(isset($categories) && $categories->count()){
+                $categories_arr = [];
+                foreach($categories as $category){
+                    $categories_arr[] = [
+                        'name'              => $category['name'],
+                        'translation_lang'  => $category['translation_lang'],
+                        'translation_of'    => $deafult_category_id,
+                        'slug'              => $category['name'],
+                        'photo'             => $filePath
+                    ];
+                }
+                MainCategory::insert($categories_arr);
+            }
+            DB::commit(); //save all rows done
+            return redirect()->route('admin.maincategories')->with(['success' => 'Saved Successfuly !!']);
+
+        }catch(\Exception $ex){
+            DB::rollback(); // no execute save any data to db
+            return redirect()->route('admin.maincategories')->with(['error' => 'Faild !!']);
         }
-    }   
+    }
+
+    
+
+
 }
+

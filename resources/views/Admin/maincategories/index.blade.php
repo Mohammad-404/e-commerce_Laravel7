@@ -18,14 +18,16 @@
             @endif
             <h2 class="title-1 m-b-25">Items</h2>
             <div class="table-responsive table--no-card m-b-40">
-                <table class="table table-borderless table-striped table-earning">
+                <table class="table table-borderless table-striped table-earning scroll-horizontal">
                     <thead>
                         <tr>
                             <th>Name</th>
+                            <th>Photo</th>
                             <th>Language</th>
                             <th>State</th>
                             <th>Update</th>
                             <th>Delete</th>
+                            <th>State</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -33,10 +35,12 @@
                             @foreach ($main_categories as $item)
                                 <tr>
                                     <td>{{$item->name}}</td>
+                                    <td><img src="{{asset("$item->photo")}}" width="50px" height="50px"></td>
                                     <td>{{$item->translation_lang}}</td>
                                     <td>{{$item->getActive()}}</td>
                                     <td><a class="btn btn-primary" href="" >Update</a></td>
                                     <td><a class="btn btn-danger" href="" >Delete</a></td>
+                                    <td><a class="btn btn-dark" href="" >{{$item->getActive()}}</a></td>
                                 </tr>
                             @endforeach
                         @endisset
