@@ -38,18 +38,12 @@
 
                     <div class="form-group col-lg-6">
                         <label for="exampleInputPassword1" class="my-5">State Active ?</label>
-                        <input type="checkbox" value="1" id="custom7" @if($languages->active == 1) checked="checked" @endif /> 
-                        <input type="hidden" value="1" id="hdncustom7" name="active" />
+                        <input type="checkbox" value="1" name="active" @if($languages->active == 1) checked="checked" @endif /> 
+                        
                         @error('active')
                             <label class="text-danger">{{$message}}</label>
                         @enderror
                     </div>
-
-                    
-                    {{-- <div class="form-group col-lg-6">
-                    <label for="exampleInputPassword1">Active Language</label>
-                    <input type="text" class="form-control"  placeholder="Active Language">
-                    </div> --}}
                 </div>
                 <button type="submit" class="btn btn-danger">Update</button>
               </form>

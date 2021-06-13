@@ -24,7 +24,7 @@ class MainCategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'photo'                              => 'required|mimes:png,jpg,jpeg',
+            'photo'                              => 'required_without:id|mimes:png,jpg,jpeg',
             'category'                           => 'required|array|min:1',
             'category.*.name'                    => 'required',
             'category.*.active'                  => 'required',
@@ -32,15 +32,4 @@ class MainCategoryRequest extends FormRequest
         ];
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
-    public function messages()
-    {
-        return [
-
-        ];
-    }
 }

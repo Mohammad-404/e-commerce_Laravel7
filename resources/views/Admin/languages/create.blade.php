@@ -38,9 +38,11 @@
 
                     <div class="form-group col-lg-6">
                         <label for="exampleInputPassword1" class="my-5">State Active ?</label>
+                        <input type="checkbox" value="1" name="active" checked="checked" /> 
+
                         {{-- <input class="my-5" type="checkbox" name="active" checked> --}}
-                        <input type="checkbox" value="1" id="custom7" checked="checked" /> 
-                        <input type="hidden" value="1" id="hdncustom7" name="active" />
+                        {{-- <input type="checkbox" value="1" id="custom7" checked="checked" /> 
+                        <input type="hidden" value="1" id="hdncustom7" name="active" /> --}}
 
                         @error('active')
                             <label class="text-danger">{{$message}}</label>

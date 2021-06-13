@@ -10,7 +10,6 @@ use Illuminate\support\Facades\Config;
 use App\Http\Requests\MainCategoryRequest;
 use Illuminate\Support\Facades\DB;
 
-
 class MainCategoriesController extends Controller
 {
     public function index(){
@@ -35,7 +34,7 @@ class MainCategoriesController extends Controller
         // return $filter; // return like with key {"1":{"name":"MAN","translation_lang":"en","active":"1"}}
         //like create i want using insertGetId === create
         
-        try{
+        try{        
             $main_category = collect($request->category);
             $filter = $main_category->filter(function($value,$key){
                 return $value['translation_lang'] == get_language_deafult();
@@ -54,12 +53,14 @@ class MainCategoriesController extends Controller
                 'translation_lang'  => $deafult_category['translation_lang'],
                 'translation_of'    => 0,
                 'slug'              => $deafult_category['name'],
-                'photo'             => $filePath
+                'photo'             => $filePath,
+                'active'            => $deafult_category['active']
             ]);
-
+        
             $categories = $main_category->filter(function($value,$key){
                 return $value['translation_lang'] != get_language_deafult();
             });
+
 
             if(isset($categories) && $categories->count()){
                 $categories_arr = [];
@@ -69,7 +70,8 @@ class MainCategoriesController extends Controller
                         'translation_lang'  => $category['translation_lang'],
                         'translation_of'    => $deafult_category_id,
                         'slug'              => $category['name'],
-                        'photo'             => $filePath
+                        'photo'             => $filePath,
+                        'active'            => $deafult_category['active']
                     ];
                 }
                 MainCategory::insert($categories_arr);
@@ -83,8 +85,24 @@ class MainCategoriesController extends Controller
         }
     }
 
-    
+    public function edit($id){
+        $main_categories = MainCategory::selection()->find($id);
+        if(!$main_categories)
+            return redirect()->route('admin.maincategories')->with(['error' => 'Main Category is not found !!']);
+        
 
+        return view('admin.maincategories.edit',compact('main_categories'));
+    }
+    
+    public function update($id,MainCategoryRequest $request){
+        $check_id = MainCategory::find($id);
+        if(!$check_id){
+            return redirect()->route('admin.maincategories')->with(['error' => 'Update Faild !!']);
+        }
+        
+        return $request;
+             
+    }
 
 }
 

@@ -27,7 +27,7 @@ class languageRequest extends FormRequest
             'abbr'              => 'required|string|max:10',
             'name'              => 'required|string|max:100',
             'direction'         => 'required|in:rtl,ltr',
-            'active'            => 'required|in:0,1',
+            // 'active'            => 'required|in:1',
         ];
     }
 

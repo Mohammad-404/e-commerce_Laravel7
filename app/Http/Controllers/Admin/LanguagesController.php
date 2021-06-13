@@ -23,6 +23,9 @@ class LanguagesController extends Controller
         // return $request->except('_token'); 
         // except : Note this is not save to database like token i don't want save from database 
         try{
+            if(!$request->has('active'))
+                $request -> request -> add(['active' => 0]);
+            
             Language::create($request->except('_token'));
             return redirect()->Route('admin.languages')->with(['success' => 'saved information successfully !']);
         }catch(\Exception $ex){
@@ -47,6 +50,9 @@ class LanguagesController extends Controller
             }
             // Language::find($id)->update();
             // $languages->update([]);
+            if(!$request->has('active'))
+            $request -> request -> add(['active' => 0]);
+        
             $languages->update($request -> except('_token'));
             return redirect()->Route('admin.languages')->with(['success' => 'Updated Successfully !']);
 

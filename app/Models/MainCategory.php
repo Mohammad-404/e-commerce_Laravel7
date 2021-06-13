@@ -19,7 +19,7 @@ class MainCategory extends Model
      * @var array
      */
     protected $fillable = [
-        'translation_lang','translation_of','name','slug','photo','active','created_at','updated_at'
+        'id','translation_lang','translation_of','name','slug','photo','active','created_at','updated_at'
     ];
 
     public function scopeActive($query){
@@ -30,12 +30,12 @@ class MainCategory extends Model
         return $this->active == 1 ? 'Active Item' : 'Not Active Item';
     }
 
-    // public function getPhotoAttripute($val){
-    //     return $val !== null ? asset('public/'.$val) : "";
+    // public function getActiveAttribute($val){
+    //     return $val == 1 ? 'Active Item' : 'Not Active Item';
     // }
-
+    
     public function scopeSelection($query){
-        return $query->select('translation_lang','translation_of','name','slug','photo','active');
+        return $query->select('id','translation_lang','translation_of','name','slug','photo','active');
     }
 
 }

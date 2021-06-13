@@ -18,3 +18,4 @@ function uploadImage($folder , $image){
     $path       = 'images/'.$folder.'/'.$filename;
     return $path;
 }
+

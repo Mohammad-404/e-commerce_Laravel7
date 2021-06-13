@@ -38,7 +38,7 @@
                                     <td><img src="{{asset("$item->photo")}}" width="50px" height="50px"></td>
                                     <td>{{$item->translation_lang}}</td>
                                     <td>{{$item->getActive()}}</td>
-                                    <td><a class="btn btn-primary" href="" >Update</a></td>
+                                    <td><a class="btn btn-primary" href="{{Route('admin.maincategories.edit',$item->id)}}" >Update</a></td>
                                     <td><a class="btn btn-danger" href="" >Delete</a></td>
                                     <td><a class="btn btn-dark" href="" >{{$item->getActive()}}</a></td>
                                 </tr>
