@@ -27,7 +27,7 @@ class MainCategoryRequest extends FormRequest
             'photo'                              => 'required_without:id|mimes:png,jpg,jpeg',
             'category'                           => 'required|array|min:1',
             'category.*.name'                    => 'required',
-            'category.*.active'                  => 'required',
+            // 'category.*.active'               => 'required',
             'category.*.translation_lang'        => 'required',
         ];
     }
