@@ -39,22 +39,8 @@
     <!-- Main JS-->
     <script src="{{asset('Controll_Lib/js/main.js')}}"></script>
 
-    <script>
-        $('#custom7').on('change', function(){
-            $('#hdncustom7').val(this.checked ? 1 : 0);
-        });
-    </script>
+@yield('script')
 
-    <script>
-
-        $('#custom8').on('change', function(){
-        this.value = this.checked ? 1 : 0;
-            $('#hdncustom8').val(this.value);
-        }).change();
-
-
-
-    </script>
 </body>
 
 </html>

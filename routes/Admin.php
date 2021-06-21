@@ -8,7 +8,7 @@ define('PAGINATION_COUNT',10);
 Route::group(['namespace' => 'Admin' , 'middleware' => 'auth:Admin'],function(){
     Route::get('index','DashboardController@index') -> name('admin.dashboard');
     
-    /**Begin Languages Routes */
+    /** Begin Languages Routes */
     Route::group(['prefix'=>'languages'],function(){
         Route::get('/','LanguagesController@index')->name('admin.languages');
         Route::get('create','LanguagesController@create')->name('admin.languages.create');
@@ -19,9 +19,9 @@ Route::group(['namespace' => 'Admin' , 'middleware' => 'auth:Admin'],function(){
 
         Route::get('delete/{id}','LanguagesController@destroy')->name('admin.languages.delete');
     });
-    /**End Languages Routes */
+    /** End Languages Routes */
 
-    /**Begin Main Categorirs Routes */
+    /** Begin Main Categorirs Routes */
     Route::group(['prefix'=>'main_categories'],function(){
         Route::get('/','MainCategoriesController@index')->name('admin.maincategories');
         Route::get('create','MainCategoriesController@create')->name('admin.maincategories.create');
@@ -32,15 +32,24 @@ Route::group(['namespace' => 'Admin' , 'middleware' => 'auth:Admin'],function(){
 
         Route::get('delete/{id}','MainCategoriesController@destroy')->name('admin.maincategories.delete');
     });
-    /**End Main Categorirs Routes */
+    /** End Main Categorirs Routes */
+
+    /** Begin Main vendors Routes */
+    Route::group(['prefix'=>'vendors'],function(){
+        Route::get('/','VendorsController@index')->name('admin.vendors');
+        Route::get('create','VendorsController@create')->name('admin.vendors.create');
+        Route::post('store','VendorsController@store')->name('admin.vendors.store');
+
+        Route::get('edit/{id}','VendorsController@edit')->name('admin.vendors.edit');
+        Route::post('update/{id}','VendorsController@update')->name('admin.vendors.update');
+
+        Route::get('delete/{id}','VendorsController@destroy')->name('admin.vendors.delete');
+    });
+    /** End Main vendors Routes */
 
     
 });
 
-
-// 1. get page 
-// 2. post sent data to check database 
-// guest:admin any one can visit this page guest like auth i must using same as name Admin from file auth in guard 
 
 Route::group(['namespace' => 'Admin' , 'middleware' => 'guest:Admin'],function(){
     Route::get('Login', 'LoginController@getLogin')->name('get.login.admin');

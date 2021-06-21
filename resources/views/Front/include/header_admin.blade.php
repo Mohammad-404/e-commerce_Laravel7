@@ -212,6 +212,20 @@
                             </ul>
                         </li>
 
+                        <li class="active has-sub">
+                            <a class="js-arrow" href="#">
+                                <i class="fas fa-tachometer-alt"></i>Stores ({{App\Models\Vendor::count()}})</a>
+                            <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                <li>
+                                    <a href="{{route('admin.vendors')}}">View All</a>
+                                </li>
+                                <li>
+                                    <a href="{{route('admin.vendors.create')}}">Add Stores</a>
+                                </li>
+                            </ul>
+                        </li>
+
+
                         <li>
                             <a href="form.html">
                                 <i class="far fa-check-square"></i>Forms</a>

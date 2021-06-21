@@ -37,4 +37,10 @@ class MainCategory extends Model
     public function categories(){
         return $this -> hasMany(self::class , 'translation_of');
     }
+
+    //many to one relation tow tabels vendors and categories
+    public function vendors(){
+        return $this -> hasMany(self::class , 'category_id' , 'id'); //one forignkey and two primary key
+    } 
+
 }

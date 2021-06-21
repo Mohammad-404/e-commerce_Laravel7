@@ -46,7 +46,7 @@ class MainCategoriesController extends Controller
                 $filePath = uploadImage('maincategories' , $request->photo);
             }
             
-            if(!$request->has('category.0.active'))
+            if(!$request->has('category.*.active'))
                 $request->request->add(['active'=>0]);
             else
                 $request->request->add(['active'=>1]);
@@ -136,6 +136,23 @@ class MainCategoriesController extends Controller
         }catch(\Exception $ex){
             return redirect()->Route('admin.maincategories')->with(['error' => 'Updated Faild error process !']);
         }  
+    }
+
+    public function destroy($id){
+        try{
+            $id_find = MainCategory::find($id);
+            if(!$id_find){
+                return redirect()->route('admin.maincategories')->with(['error' => 'Not Found Categories']);
+            }
+            
+            
+            $id_find->delete();
+        
+            return redirect()->route('admin.maincategories')->with(['success' => 'Done Deleted Item']);
+        }catch(\Exception $ex){
+            return redirect()->Route('admin.maincategories')->with(['error' => 'Delete Faild error process !']);
+        }
+
     }
 
 }

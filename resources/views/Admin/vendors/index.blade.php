@@ -16,38 +16,41 @@
                     {{Session::get('error')}}
                 </div>                
             @endif
-            <h2 class="title-1 m-b-25">Items</h2>
+            <h2 class="title-1 m-b-25">Stores(Vendors)</h2>
             <div class="table-responsive table--no-card m-b-40">
                 <table class="table table-borderless table-striped table-earning scroll-horizontal">
                     <thead>
                         <tr>
                             <th>Name</th>
-                            <th>Photo</th>
-                            <th>Language</th>
-                            <th>State</th>
+                            <th>Logo</th>
+                            <th>Mobile</th>
+                            <th>Main Categories</th>
+                            <th>Status</th>
                             <th>Update</th>
                             <th>Delete</th>
-                            <th>State</th>
+                            <th>Active</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @isset($main_categories)                            
-                            @foreach ($main_categories as $item)
-                                <tr>
-                                    <td>{{$item->name}}</td>
-                                    <td><img src="{{asset("$item->photo")}}" width="50px" height="50px"></td>
-                                    <td>{{$item->translation_lang}}</td>
-                                    <td>{{$item->getActive()}}</td>
-                                    <td><a class="btn btn-primary" href="{{Route('admin.maincategories.edit',$item->id)}}" >Update</a></td>
-                                    <td><a class="btn btn-danger" href="{{Route('admin.maincategories.delete',$item->id)}}" >Delete</a></td>
-                                    <td><a class="btn btn-dark" href="" >{{$item->getActive()}}</a></td>
-                                </tr>
+                        @isset($Vendors)
+                            @foreach ($Vendors as $data)
+                            <tr>
+                                <td>{{$data->name}}</td>
+                                <td><img src="{{$data->logo}}" alt="Store" width="50px" height="50px"></td>
+                                <td>{{$data->mobile}}</td>
+                                <td>{{$data->category->name}}</td>
+                                {{-- public function category() --}}
+                                <td>{{$data->getActive()}}</td>
+                                <td><a class="btn btn-primary" href="{{route('admin.vendors.edit',$data->id)}}">Update</a></td>
+                                <td><a class="btn btn-danger" href="{{route('admin.vendors.delete',$data->id)}}">Delete</a></td>
+                                <td><a class="btn btn-warning text-white" href="">Active</a></td>
+                            </tr>
                             @endforeach
                         @endisset
                     </tbody>
                     <tfoot>
                         {{-- Start Display Pagination --}}
-                            {{$main_categories->links()}}
+                            {{$Vendors->links()}}
                         {{-- End Display Pagination --}}
                     </tfoot>
                 </table>
