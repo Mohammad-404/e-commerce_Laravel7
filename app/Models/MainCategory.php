@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Observers\MainCategoryObserve;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 
@@ -21,6 +22,12 @@ class MainCategory extends Model
     protected $fillable = [
         'id','translation_lang','translation_of','name','slug','photo','active','created_at','updated_at'
     ];
+
+    // Connection Observe With Models
+    protected static function boot(){
+        parent::boot();
+        MainCategory::observe(MainCategoryObserve::class);
+    }
 
     public function scopeActive($query){
         return $query -> where('active',1);

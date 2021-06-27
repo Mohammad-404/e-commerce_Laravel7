@@ -14,7 +14,7 @@ class MainCategoryObserve
      */
     public function created(MainCategory $mainCategory)
     {
-        //
+        $mainCategory -> vendors() ->update(['active' => $mainCategory -> active]);
     }
 
     /**
