@@ -18,10 +18,10 @@ class Vendor extends Model
      * @var array
      */
     protected $fillable = [
-        'name','logo','mobile','address','email','category_id','active','created_at','updated_at'
+        'name','logo','mobile','address','email','category_id','active','password','created_at','updated_at'
     ];
 
-    protected $hidden = ['category_id'];
+    protected $hidden = ['category_id','password'];
     
     public function scopeActive($query){
         return $query -> where('active' , 1);
@@ -32,15 +32,22 @@ class Vendor extends Model
     }
 
     public function scopeSelection($query){
-        return $query->select('id','name','logo','mobile','email','category_id','active');
+        return $query->select('id','name','address','logo','mobile','email','category_id','active','password');
     }
 
     public function getActive(){
-        return $this->acitve == 1 ? "Item is Active" : "Item is Not Active";
+        return $this->active == 1 ? "Item is Active" : "Item is Not Active"; 
     }
 
     //one to many belongsTo
     public function category(){
         return $this -> belongsTo('App\Models\MainCategory','category_id' , 'id');  
     }
+
+    public function setPasswordAttribute($password){
+        if(!empty($password)){
+            $this->attributes['password'] = bcrypt($password);
+        }
+    }
+
 }

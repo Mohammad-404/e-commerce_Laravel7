@@ -30,6 +30,7 @@
                             <th>State</th>
                         </tr>
                     </thead>
+                    
                     <tbody>
                         @isset($main_categories)                            
                             @foreach ($main_categories as $item)
@@ -40,7 +41,13 @@
                                     <td>{{$item->getActive()}}</td>
                                     <td><a class="btn btn-primary" href="{{Route('admin.maincategories.edit',$item->id)}}" >Update</a></td>
                                     <td><a class="btn btn-danger" href="{{Route('admin.maincategories.delete',$item->id)}}" >Delete</a></td>
-                                    <td><a class="btn btn-dark" href="" >{{$item->getActive()}}</a></td>
+                                    <td><a class="btn btn-dark" href="{{route('admin.maincategories.status',$item->id)}}" >
+                                       @if($item->active == 1)  
+                                            Activated
+                                        @else 
+                                            Deactive
+                                       @endif
+                                    </a></td>
                                 </tr>
                             @endforeach
                         @endisset

@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\support\Facades\Config;
 use App\Http\Requests\MainCategoryRequest;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+
 
 class MainCategoriesController extends Controller
 {
@@ -46,7 +48,7 @@ class MainCategoriesController extends Controller
                 $filePath = uploadImage('maincategories' , $request->photo);
             }
             
-            if(!$request->has('category.*.active'))
+            if(!$request->has('category.0.active'))
                 $request->request->add(['active'=>0]);
             else
                 $request->request->add(['active'=>1]);
@@ -86,6 +88,7 @@ class MainCategoriesController extends Controller
 
         }catch(\Exception $ex){
             DB::rollback(); // no execute save any data to db
+            return $ex;
             return redirect()->route('admin.maincategories')->with(['error' => 'Faild !!']);
         }
     }
@@ -140,20 +143,51 @@ class MainCategoriesController extends Controller
 
     public function destroy($id){
         try{
-            $id_find = MainCategory::find($id);
-            if(!$id_find){
-                return redirect()->route('admin.maincategories')->with(['error' => 'Not Found Categories']);
+            $main_categories = MainCategory::find($id);
+            if(!$main_categories){
+                return redirect()->Route('admin.maincategories')->with(['error' => 'Categories Not Found !']);
             }
             
+            $vendors = $main_categories -> vendors();
+            if(isset($vendors) && $vendors->count() > 0 ){
+                return redirect()->Route('admin.maincategories')->with(['error' => 'Sorry Cant Delete Beacuse Some Relations !']);
+            }
+
             
-            $id_find->delete();
-        
+            // $image = Str::after($main_categories->photo,'Name String Here Take after this string/');
+            // $image = base_path($image);
+            
+            unlink($main_categories->photo);
+
+            $main_categories -> delete();
+
             return redirect()->route('admin.maincategories')->with(['success' => 'Done Deleted Item']);
         }catch(\Exception $ex){
             return redirect()->Route('admin.maincategories')->with(['error' => 'Delete Faild error process !']);
         }
 
     }
+
+    public function changeStatus($id){
+        try{
+            $main_categories = MainCategory::find($id);
+            if(!$main_categories){
+                return redirect()->route('admin.maincategories')->with(['error' => 'Not Found Category !']);
+            } 
+            
+// 3 hours above 5 door بوليفارد
+// بوابة الرؤيسية
+
+            $status = $main_categories->active == 0 ? 1 : 0; 
+            $main_categories -> update(['active' => $status]);
+
+            return redirect()->route('admin.maincategories')->with(['success' => 'Done Update Status !']);
+        }catch(\Exception $ex){
+            return redirect()->route('admin.maincategories')->with(['error' => 'Faild Process Update Status !']);
+        }
+    }
+
+    
 
 }
 

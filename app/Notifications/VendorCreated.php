@@ -47,7 +47,7 @@ class VendorCreated extends Notification
      */
     public function toMail($notifiable)
     {
-        $subject  = sprintf('%s Done Created Your Account In WebSite : %s', config('app.name'), 'Mohammad AL-Masri');
+        $subject  = sprintf('%s Done Created Your Account In WebSite : %s', config('app.name'), $this->vendor->name);
         $greeting = sprintf('Hello %s!', $notifiable->name);
         return (new MailMessage)
                     ->subject($subject)

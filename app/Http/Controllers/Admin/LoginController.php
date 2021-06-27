@@ -19,6 +19,11 @@ class LoginController extends Controller
 
     public function postLogin(Admin $Admin,LoginRequest $request){
         //validation in loginrequest
+        if(!$request->has('remember'))
+                $request->request->add(['remember' => false]);
+            else
+                $request->request->add(['remember' => true]);
+
         $remember_me = $request->has('remember') ? true : false; //true save login session user click logout/ false out session dynamic  
 
         if(auth()->guard('Admin')->attempt(['email' => $request->input('email') , 

@@ -9,7 +9,7 @@ class MainCategory extends Model
 {
     use Notifiable; //using to send Notifications
 
-
+    
     protected $table = "main_categories";
     
         
@@ -40,7 +40,7 @@ class MainCategory extends Model
 
     //many to one relation tow tabels vendors and categories
     public function vendors(){
-        return $this -> hasMany(self::class , 'category_id' , 'id'); //one forignkey and two primary key
+        return $this -> hasMany('App\Models\Vendor' , 'category_id' , 'id'); //one forignkey and two primary key
     } 
 
 }

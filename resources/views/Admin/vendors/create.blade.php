@@ -21,7 +21,7 @@
                             @enderror
                         </div>
 
-                        <div class="form-group col-lg-6">
+                        <div class="form-group col-lg-12">
                             <label for="exampleInputEmail1">Name</label>
                             <input type="text" name="name" value="{{old('name')}}" class="form-control"  placeholder="">
                             @error("name")
@@ -33,6 +33,14 @@
                             <label for="exampleInputEmail1">Email</label>
                             <input type="text" name="email" value="{{old('email')}}" class="form-control"  placeholder="">
                             @error("email")
+                                <label class="text-danger">{{$message}}</label>
+                            @enderror
+                        </div>
+                        
+                        <div class="form-group col-lg-6">
+                            <label for="exampleInputEmail1">Password</label>
+                            <input type="password" name="password" value="" class="form-control"  placeholder="">
+                            @error("password")
                                 <label class="text-danger">{{$message}}</label>
                             @enderror
                         </div>
@@ -70,12 +78,13 @@
                         </div>
           
                         <div class="form-group col-lg-12">
-                            <input type="text" name="address" placeholder="Enter Address" class="form-control">
+                            <input type="text" value="{{old('address')}}" name="address" placeholder="Enter Address" class="form-control">
                             @error("address")   
                                 <label class="text-danger">{{$message}}</label>
                             @enderror
                         </div>
 
+                        {{-- map --}}
                         {{-- <div class="form-group col-lg-12">
                             <input type="text" id="pac-input" name="address" class="form-control">
                             @error("address")   

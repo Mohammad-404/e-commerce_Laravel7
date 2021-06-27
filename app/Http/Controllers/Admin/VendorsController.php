@@ -9,6 +9,8 @@ use App\Models\MainCategory;
 use App\Http\Requests\VendorRequest;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\VendorCreated;
+use Illuminate\Support\facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 class VendorsController extends Controller
 {
@@ -42,6 +44,9 @@ class VendorsController extends Controller
                 'active'            => $request->active,
                 'address'           => $request->address,
                 'category_id'       => $request->category_id,
+                // 'password'          => Hash::make($request->password),
+                // 'password'          => bcrypt($request->password),
+                'password'          => $request->password, //bcrybt in model
                 'logo'              => $filePath,
             ]);
 
@@ -56,19 +61,85 @@ class VendorsController extends Controller
 
     
     public function edit($id){
+        try{
+            $vendors = Vendor::selection()->find($id);
+            if(!$vendors){
+                return redirect()->route('admin.vendors')->with(['success' => 'the vendor is not found !!']);
+            }
 
+            $Main_Categories = MainCategory::where('translation_of',0)->active()->get();
+
+            return view('Admin.vendors.edit',compact('vendors','Main_Categories'));
+        }catch(\Exception $ex){
+            return redirect()->route('admin.vendors')->with(['error' => 'Faild Process']);
+        }
     }
 
-    public function update($id){
+    public function update($id, VendorRequest $request){
+        try{
+            $vendors = Vendor::selection()->find($id);
+            if(!$vendors){
+                return redirect()->route('admin.vendors')->with(['error' => 'the vendor is not found !!']);
+            }
 
+            if(!$request->has('active'))
+                $request->request->add(['active' => 0]);
+            else
+                $request->request->add(['active' => 1]);
+
+            
+            DB::beginTransaction();
+
+            if($request->has('logo')){
+                $filePath = uploadImage('vendors',$request->logo);
+                $vendors->update([
+                   'logo' => $filePath
+                ]);
+            }
+
+            $data = $request->except('_token','id','password','logo');
+
+            if($request->has('password')){
+                $data['password'] = $request->password;
+            }
+
+            $vendors->update($data);
+
+            DB::commit();
+            return redirect()->route('admin.vendors')->with(['success' => 'Done Updated Vendor']);
+        }catch(\Exception $ex){
+            DB::rollback();
+            return redirect()->route('admin.vendors')->with(['error' => 'Faild Process']);
+        }
     }
 
-    
-    public function changeStatus(){
+    public function changeStatus($id){
+        try{
+            $vendors = Vendor::find($id);
+            if(!$vendors){
+                return redirect()->route('admin.vendors')->with(['error' => 'Not Found Vendor !']);
+            }
+            $status = $vendors->active == 1 ? 0 : 1;
+            $vendors->update(['active' => $status]);
 
+            return redirect()->route('admin.vendors')->with(['success' => 'Done Update Status Vendor !']);
+        }catch(\Exception $ex){
+            return redirect()->route('admin.vendors')->with(['error' => 'Faild Process !']);
+        }
     }
 
     public function delete($id){
+        try{
+            $vendors = Vendor::find($id);
+            if(!$vendors){
+                return redirect()->route('admin.vendors')->with(['error' => 'Not Found Vendor !']);
+            }
+            
+            $vendors->delete();
 
+            return redirect()->route('admin.vendors')->with(['success' => 'Done Delete Vendor !']);
+        }catch(\Exception $ex){
+            return redirect()->route('admin.vendors')->with(['error' => 'Faild Process !']);
+        }
     }
 }

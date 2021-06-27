@@ -31,6 +31,7 @@ Route::group(['namespace' => 'Admin' , 'middleware' => 'auth:Admin'],function(){
         Route::post('update/{id}','MainCategoriesController@update')->name('admin.maincategories.update');
 
         Route::get('delete/{id}','MainCategoriesController@destroy')->name('admin.maincategories.delete');
+        Route::get('changeStatus/{id}','MainCategoriesController@changeStatus')->name('admin.maincategories.status');
     });
     /** End Main Categorirs Routes */
 
