@@ -198,7 +198,7 @@
                         
                         <li class="active has-sub">
                             <a class="js-arrow" href="#">
-                                <i class="fas fa-tachometer-alt"></i>Main Categories ({{App\Models\MainCategory::count()}})</a>
+                                <i class="fas fa-tachometer-alt"></i>Main Categories ({{App\Models\MainCategory::DeafultCategory()->count()}})</a>
                                 {{-- <i class="fas fa-tachometer-alt"></i>Main Categories ({{App\Models\MainCategory::active()->count()}})</a> --}}
                                 {{-- active this is function in model scopeactive but i get active name --}}
                                 {{-- <i class="fas fa-tachometer-alt"></i>Main Categories ({{App\Models\MainCategory::where('active')->count()}})</a> --}}
@@ -221,6 +221,19 @@
                                 </li>
                                 <li>
                                     <a href="{{route('admin.vendors.create')}}">Add Stores</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="active has-sub">
+                            <a class="js-arrow" href="#">
+                                <i class="fas fa-tachometer-alt"></i>Sub Categories ({{App\Models\SubCategory::count()}})</a>
+                            <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                <li>
+                                    <a href="{{route('admin.subcategories')}}">View All</a>
+                                </li>
+                                <li>
+                                    <a href="{{route('admin.subcategories.create')}}">Add Sub Categories</a>
                                 </li>
                             </ul>
                         </li>
@@ -431,8 +444,8 @@
                                             <img src="images/icon/avatar-01.jpg" alt="John Doe" />
                                         </div>
                                         <div class="content">
-                                            <a class="js-acc-btn" href="#">
-                                             mohammad
+                                            <a class="js-acc-btn" href="#">                                             
+                                                {{Auth::user()->name}}
                                             </a>
                                         </div>
                                         <div class="account-dropdown js-dropdown">
@@ -444,9 +457,9 @@
                                                 </div>
                                                 <div class="content">
                                                     <h5 class="name">
-                                                        <a href="#">john doe</a>
+                                                        <a href="#">{{Auth::user()->name}}</a>
                                                     </h5>
-                                                    <span class="email">johndoe@example.com</span>
+                                                    <span class="email">{{Auth::user()->email}}</span>
                                                 </div>
                                             </div>
                                             <div class="account-dropdown__body">
@@ -464,7 +477,7 @@
                                                 </div>
                                             </div>
                                             <div class="account-dropdown__footer">
-                                                <a href="#">
+                                                <a href="{{route('admin.logout')}}">
                                                     <i class="zmdi zmdi-power"></i>Logout</a>
                                             </div>
                                         </div>

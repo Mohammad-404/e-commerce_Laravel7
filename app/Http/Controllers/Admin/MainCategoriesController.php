@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\support\Facades\Config;
 use App\Http\Requests\MainCategoryRequest;
+use Illuminate\Auth\Events\Login;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
@@ -158,6 +159,9 @@ class MainCategoriesController extends Controller
             // $image = base_path($image);
             
             unlink($main_categories->photo);
+
+            //Note Important Deleted already relation all languages category using observe 
+            //or can use this $main_categories->categories()->delete();
 
             $main_categories -> delete();
 

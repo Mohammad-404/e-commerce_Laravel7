@@ -64,7 +64,7 @@ return [
 
         'vendors' => [
             'driver' => 'local',
-            'root' => base_path('public/images/vendors'),
+            'root' => base_path('public/images/vendors'), //public_path
             'url' => env('APP_URL').'/public',
             'visibility' => 'public',
         ],

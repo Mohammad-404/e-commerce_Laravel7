@@ -7,6 +7,7 @@ define('PAGINATION_COUNT',10);
 
 Route::group(['namespace' => 'Admin' , 'middleware' => 'auth:Admin'],function(){
     Route::get('index','DashboardController@index') -> name('admin.dashboard');
+    Route::get('logout','DashboardController@logout')->name('admin.logout');
     
     /** Begin Languages Routes */
     Route::group(['prefix'=>'languages'],function(){
@@ -45,10 +46,25 @@ Route::group(['namespace' => 'Admin' , 'middleware' => 'auth:Admin'],function(){
         Route::post('update/{id}','VendorsController@update')->name('admin.vendors.update');
 
         Route::get('delete/{id}','VendorsController@destroy')->name('admin.vendors.delete');
+        Route::get('changeStatus/{id}','VendorsController@changeStatus')->name('admin.vendors.status');
+
     });
     /** End Main vendors Routes */
-
     
+    /** Begin subcategories Routes */
+    Route::group(['prefix'=>'SubCategories'],function(){
+        Route::get('/','SubCategoriesController@index')->name('admin.subcategories');
+        Route::get('create','SubCategoriesController@create')->name('admin.subcategories.create');
+        Route::post('store','SubCategoriesController@store')->name('admin.subcategories.store');
+
+        Route::get('edit/{id}','SubCategoriesController@edit')->name('admin.subcategories.edit');
+        Route::post('update/{id}','SubCategoriesController@update')->name('admin.subcategories.update');
+
+        Route::get('delete/{id}','SubCategoriesController@destroy')->name('admin.subcategories.delete');
+        Route::get('changeStatus/{id}','SubCategoriesController@changeStatus')->name('admin.subcategories.status');
+
+    });
+    /** End Main subcategories Routes */
 });
 
 

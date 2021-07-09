@@ -14,7 +14,7 @@ class MainCategoryObserve
      */
     public function created(MainCategory $mainCategory)
     {
-        $mainCategory -> vendors() ->update(['active' => $mainCategory -> active]);
+
     }
 
     /**
@@ -25,7 +25,7 @@ class MainCategoryObserve
      */
     public function updated(MainCategory $mainCategory)
     {
-        //
+        $mainCategory -> vendors() -> update(['active' => $mainCategory -> active]);
     }
 
     /**
@@ -36,7 +36,7 @@ class MainCategoryObserve
      */
     public function deleted(MainCategory $mainCategory)
     {
-        //
+        $mainCategory -> categories() -> delete();
     }
 
     /**

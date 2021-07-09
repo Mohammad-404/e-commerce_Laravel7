@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Notification;
 use App\Notifications\VendorCreated;
 use Illuminate\Support\facades\Hash;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class VendorsController extends Controller
 {
@@ -128,17 +129,22 @@ class VendorsController extends Controller
         }
     }
 
-    public function delete($id){
+    public function destroy($id){
         try{
             $vendors = Vendor::find($id);
             if(!$vendors){
                 return redirect()->route('admin.vendors')->with(['error' => 'Not Found Vendor !']);
             }
-            
+
+            $images = Str::after($vendors->logo, 'images/');
+            $length_logo = ('images/'.$images); 
+            unlink($length_logo);
+
             $vendors->delete();
 
             return redirect()->route('admin.vendors')->with(['success' => 'Done Delete Vendor !']);
         }catch(\Exception $ex){
+            return $ex;
             return redirect()->route('admin.vendors')->with(['error' => 'Faild Process !']);
         }
     }

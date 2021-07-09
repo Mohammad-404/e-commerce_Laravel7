@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Observers\MainCategoryObserve;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
+use SplObserver;
 
 class MainCategory extends Model
 {
@@ -45,9 +46,18 @@ class MainCategory extends Model
         return $this -> hasMany(self::class , 'translation_of');
     }
 
+    public function subCategories(){
+        return $this->hasMany('App\Models\SubCategory', 'category_id' ,'id');
+    }
+
     //many to one relation tow tabels vendors and categories
     public function vendors(){
         return $this -> hasMany('App\Models\Vendor' , 'category_id' , 'id'); //one forignkey and two primary key
     } 
+
+    public function scopeDeafultCategory($query){
+        return $query -> where('translation_of',0);
+    }
+
 
 }

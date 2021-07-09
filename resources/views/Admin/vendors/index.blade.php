@@ -43,7 +43,13 @@
                                 <td>{{$data->getActive()}}</td>
                                 <td><a class="btn btn-primary" href="{{route('admin.vendors.edit',$data->id)}}">Update</a></td>
                                 <td><a class="btn btn-danger" href="{{route('admin.vendors.delete',$data->id)}}">Delete</a></td>
-                                <td><a class="btn btn-warning text-white" href="">Active</a></td>
+                                <td><a class="btn btn-warning text-white" href="{{route('admin.vendors.status',$data->id)}}">
+                                @if($data->active == 1)  
+                                    Activated
+                                @else 
+                                    Deactive
+                                @endif
+                                </a></td>
                             </tr>
                             @endforeach
                         @endisset
